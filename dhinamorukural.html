@@ -1,1 +1,86 @@
 
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#faf7f0" />
+    <meta name="description" content="Discover Dhinam Oru Kural, an Android app for daily Thirukkural reading with Tamil and English meanings, offline access, favourites, and reminders." />
+    <title>About the App | Dhinam Oru Kural</title>
+    <style>
+      :root { color-scheme: light; --paper: #faf7f0; --ink: #30251b; --brown: #72512c; --line: #e4d8c6; }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--paper); color: var(--ink); font-family: Georgia, "Times New Roman", serif; line-height: 1.75; font-size: 18px; }
+      .container { width: min(960px, calc(100% - 40px)); margin-inline: auto; }
+      header { border-bottom: 1px solid var(--line); }
+      nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-block: 20px; }
+      a { color: var(--brown); text-underline-offset: 4px; }
+      a:focus-visible { outline: 3px solid var(--brown); outline-offset: 5px; }
+      .brand { font-weight: bold; text-decoration: none; font-size: 22px; }
+      .hero { padding-block: 72px 48px; max-width: 750px; }
+      .eyebrow { font: 700 12px/1.5 system-ui, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--brown); }
+      h1, h2, h3 { color: var(--brown); line-height: 1.3; }
+      h1 { font-size: clamp(36px, 6vw, 62px); margin: 16px 0 20px; letter-spacing: -.025em; }
+      h2 { font-size: 30px; margin: 0 0 18px; }
+      h3 { font-size: 22px; margin: 0 0 10px; }
+      p { margin: 0 0 18px; }
+      .tamil { font-family: "Tamil Sangam MN", "Nirmala UI", sans-serif; font-size: 21px; }
+      .intro { font-size: 21px; }
+      section { padding-block: 38px; border-top: 1px solid var(--line); }
+      .features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+      article { padding: 26px; background: #fffdf8; border: 1px solid var(--line); border-radius: 12px; }
+      article p { margin: 0; }
+      .note { padding: 28px; background: #efe7d8; border-radius: 12px; }
+      footer { margin-top: 30px; padding-block: 28px; background: #30251b; color: #eee4d5; font-size: 15px; }
+      footer a { color: #eee4d5; }
+      footer p { margin: 0; }
+      @media (max-width: 600px) { .features { grid-template-columns: 1fr; } .hero { padding-top: 42px; } article { padding: 22px; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="container" aria-label="Main navigation">
+        <a class="brand" href="/">Dhinam Oru Kural</a>
+        <a href="privacy.html">Privacy policy</a>
+      </nav>
+    </header>
+    <main class="container">
+      <div class="hero">
+        <p class="eyebrow">An Android app by Syntora Labs</p>
+        <p class="tamil" lang="ta">தினம் ஒரு குறள்</p>
+        <h1>A little wisdom.<br />Every single day.</h1>
+        <p class="intro">Make the Thirukkural part of your everyday life. Dhinam Oru Kural brings you a daily Kural, with Tamil and English meanings to help you read, reflect, and return to the verses that matter to you.</p>
+      </div>
+
+      <section aria-labelledby="about-heading">
+        <h2 id="about-heading">Timeless words, a daily habit</h2>
+        <p>The Thirukkural, composed by Thiruvalluvar, explores virtue, wealth, and love through short, thoughtful couplets. Our app makes these ideas accessible through a calm reading experience you can carry with you.</p>
+        <p>Start with today’s Kural or explore the collection at your own pace. The verses are stored on your device, so reading does not depend on an internet connection.</p>
+      </section>
+
+      <section aria-labelledby="features-heading">
+        <h2 id="features-heading">Made for everyday reading</h2>
+        <div class="features">
+          <article><h3>A Kural each day</h3><p>Build a regular reading habit with a daily verse and its meaning.</p></article>
+          <article><h3>Tamil and English</h3><p>Read in Tamil, English, or both, with translations and explanations.</p></article>
+          <article><h3>Read offline</h3><p>Access the locally stored Kural collection even when you are away from the internet.</p></article>
+          <article><h3>Find your next verse</h3><p>Search by Kural number or words, explore chapters, and browse virtue, wealth, and love.</p></article>
+          <article><h3>Save and share</h3><p>Keep favourite Kurals for later and share verses through your device’s sharing menu.</p></article>
+          <article><h3>Make it your own</h3><p>Choose light, dark, or sepia themes and set a daily reminder time that suits your routine.</p></article>
+        </div>
+      </section>
+
+      <section aria-labelledby="start-heading">
+        <h2 id="start-heading">Begin with a moment of reflection</h2>
+        <p>Open the app, read today’s Kural, and spend a moment with its meaning. Save a verse you want to revisit, share it with someone, or explore another chapter.</p>
+        <div class="note"><h3>No account required</h3><p>Your favourites and reading preferences are stored locally on your device. The app includes Google AdMob advertising; see our <a href="privacy.html">privacy policy</a> for details about advertising and data processing.</p></div>
+      </section>
+
+      <section aria-labelledby="contact-heading">
+        <h2 id="contact-heading">About the developer</h2>
+        <p>Dhinam Oru Kural is developed by Syntora Labs. For app questions, feedback, or content corrections, email <a href="mailto:contact@dhinamorukural.com">contact@dhinamorukural.com</a>.</p>
+      </section>
+    </main>
+    <footer><div class="container"><p>&copy; 2026 Syntora Labs. &nbsp; <a href="/">Visit our website</a> &middot; <a href="privacy.html">Privacy policy</a></p></div></footer>
+  </body>
+</html>
