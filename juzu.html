@@ -1,1 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Juzu · Japa &amp; Mala Counter</title>
+  <meta name="description" content="Juzu is a peaceful digital mala. Tap or pull a bead to count your japa. Beautiful beads, three themes, fully offline, no account.">
+  <style>
+    :root {
+      --bg: #efe7da; --surface: #f8f3ea; --ink: #4a3f33; --ink-soft: #6f6253; --ink-faint: #9d907e;
+      --accent: #7d8f6e; --line: #ddd2c1; --button-bg: #4a3f33; --button-ink: #f8f3ea;
+      --serif: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color-scheme: light;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0e0d0b; --surface: #17150f; --ink: #d8b46a; --ink-soft: #b39663; --ink-faint: #7d6f56;
+              --accent: #d3a954; --line: #2e2a24; --button-bg: #d3a954; --button-ink: #14110d; color-scheme: dark; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.65 var(--sans); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-underline-offset: 3px; }
+    a:hover { color: var(--accent); }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    .wrap { width: min(1040px, 100% - 32px); margin-inline: auto; }
+    .narrow { width: min(680px, 100% - 32px); margin-inline: auto; }
+    h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; margin: 0; }
+    .eyebrow { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 12px; }
+    .muted { color: var(--ink-soft); }
 
+    header { padding: 24px 0; }
+    header .wrap { display: flex; justify-content: space-between; align-items: baseline; }
+    .wordmark { font-family: var(--serif); font-size: 30px; font-weight: 500; text-decoration: none; }
+    header nav a { margin-left: 22px; font-size: 15px; color: var(--ink-soft); text-decoration: none; }
+
+    .hero { text-align: center; padding: 56px 0 72px; }
+    .hero h1 { font-size: clamp(64px, 13vw, 128px); }
+    .tagline { font-family: var(--serif); font-style: italic; font-size: clamp(24px, 4vw, 34px); color: var(--ink-soft); margin: 4px 0 24px; }
+    .hero .lede { font-size: 20px; color: var(--ink-soft); max-width: 32em; margin: 0 auto 34px; }
+    .note { margin-top: 14px; font-size: 14px; color: var(--ink-faint); }
+
+    /* A strand of beads drawn with CSS (no images). */
+    .strand { display: flex; justify-content: center; gap: 6px; margin: 0 0 30px; }
+    .strand span { width: 18px; height: 18px; border-radius: 50%;
+      background: radial-gradient(circle at 34% 30%, #f6e7c9 0%, #d9bc8c 42%, #9b7448 100%);
+      box-shadow: 2px 4px 6px -3px rgba(80, 55, 30, 0.45); }
+    .strand span.guide { width: 22px; height: 22px; margin-top: -2px;
+      background: radial-gradient(circle at 34% 30%, #9a9c9b 0%, #5b5d5d 45%, #2a2c2c 100%); }
+
+    .button { display: inline-block; padding: 14px 28px; border-radius: 999px; background: var(--button-bg);
+      color: var(--button-ink); text-decoration: none; font-weight: 500; letter-spacing: 0.3px; }
+    .button:hover { color: var(--button-ink); opacity: 0.9; }
+
+    section { padding: 64px 0; }
+    .head { text-align: center; max-width: 620px; margin: 0 auto 40px; }
+    .head h2 { font-size: clamp(34px, 5vw, 50px); }
+    .head p { margin: 14px 0 0; }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 26px 24px; }
+    .card h3 { font-size: 25px; margin-bottom: 8px; }
+    .card p { margin: 0; color: var(--ink-soft); font-size: 16px; }
+
+    .theme { border-radius: 20px; padding: 28px 24px; border: 1px solid var(--line); }
+    .theme h3 { font-size: 28px; }
+    .theme p { margin: 8px 0 0; font-size: 15.5px; }
+    .theme.zen { background: linear-gradient(180deg, #f3ece1, #e3d7c5); color: #4a3f33; }
+    .theme.trad { background: radial-gradient(circle at 50% 40%, #fcf3df, #efd9b2); color: #6b3a1e; box-shadow: inset 0 0 0 5px #efd9b2, inset 0 0 0 6px rgba(192, 138, 62, 0.45); }
+    .theme.minimal { background: radial-gradient(circle at 50% 30%, #24211d, #0b0a09); color: #d8b46a; border-color: #2e2a24; }
+    .theme p { opacity: 0.8; }
+
+    .list { list-style: none; padding: 0; margin: 0; }
+    .list li { padding: 14px 0 14px 30px; border-top: 1px solid var(--line); position: relative; color: var(--ink-soft); }
+    .list li:last-child { border-bottom: 1px solid var(--line); }
+    .list li::before { content: ""; position: absolute; left: 4px; top: 23px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+
+    .band { border: 1px solid var(--line); border-radius: 26px; background: var(--surface); padding: 44px clamp(22px, 5vw, 56px); text-align: center; }
+    .band h2 { font-size: clamp(32px, 5vw, 46px); margin-bottom: 12px; }
+    .band p { color: var(--ink-soft); max-width: 36em; margin: 0 auto 22px; }
+    .pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 26px; }
+    .pill { border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 14px; color: var(--ink-soft); }
+
+    .closing { text-align: center; padding: 88px 0 72px; }
+    .closing h2 { font-size: clamp(36px, 6vw, 56px); }
+
+    footer { border-top: 1px solid var(--line); padding: 24px 0 40px; font-size: 14px; color: var(--ink-faint); }
+    footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    footer a { text-decoration: none; margin-left: 18px; }
+
+    @media (max-width: 820px) { .grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) {
+      body { font-size: 16px; }
+      .grid { grid-template-columns: 1fr; }
+      .hero { padding-top: 28px; }
+      .strand span { width: 14px; height: 14px; }
+      .strand span.guide { width: 18px; height: 18px; }
+      header nav a:first-child { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <a class="wordmark" href="index.html">juzu.</a>
+      <nav aria-label="Main"><a href="#features">Features</a><a href="#themes">Themes</a><a href="privacy.html">Privacy</a></nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="title">
+      <div class="narrow">
+        <p class="eyebrow">Japa &amp; Mala Counter</p>
+        <h1 id="title">juzu.</h1>
+        <p class="tagline">One bead. One moment.</p>
+        <div class="strand" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span class="guide"></span><span></span><span></span><span></span><span></span>
+        </div>
+        <p class="lede">A digital prayer mala made to feel like a crafted object. Open it and begin: tap anywhere, or
+          pull a bead along the cord. Every gesture counts exactly once.</p>
+        <a class="button" href="https://play.google.com/store/apps/details?id=com.syntoralabs.juzu">Get it on Google Play</a>
+        <p class="note">Free · Works offline · No account</p>
+      </div>
+    </section>
+
+    <section id="features" aria-labelledby="features-title">
+      <div class="wrap">
+        <div class="head">
+          <p class="eyebrow">Made for practice</p>
+          <h2 id="features-title">Everything a mala needs. Nothing it doesn’t.</h2>
+          <p class="muted">No menus to get through, no streaks to keep. The counting is the product.</p>
+        </div>
+        <div class="grid">
+          <article class="card"><h3>Tap or pull a bead</h3><p>Tap anywhere, or swipe to pull the bead along the cord. A gentle haptic marks each one, and one gesture is always one repetition.</p></article>
+          <article class="card"><h3>Seven beautiful beads</h3><p>Tulsi, Rudraksha, Sandalwood, Sphatik, Lotus Seed, Black Onyx and Multicolor, each with its own texture and light.</p></article>
+          <article class="card"><h3>Any mantra, any language</h3><p>Devanagari, Tamil, English or your own words. Or count in silence, with no mantra at all.</p></article>
+          <article class="card"><h3>Eyes-closed mode</h3><p>A dark, quiet screen that counts a tap anywhere, or a press of the volume buttons on Android.</p></article>
+          <article class="card"><h3>Rounds your way</h3><p>108, 54, 27, any number you choose, or unlimited. A finished mala is marked with a soft light, then the next round begins.</p></article>
+          <article class="card"><h3>A quiet record</h3><p>Today, this week and a bead calendar for the month. Undo any bead. No scores, no leaderboards.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="themes" aria-labelledby="themes-title">
+      <div class="wrap">
+        <div class="head">
+          <p class="eyebrow">Three themes</p>
+          <h2 id="themes-title">Choose the room you pray in.</h2>
+          <p class="muted">Theme and beads are separate choices, so Modern Zen with Rudraksha, or Premium Minimal with Tulsi, are both yours to pick.</p>
+        </div>
+        <div class="grid">
+          <article class="theme zen"><h3>Modern Zen</h3><p>Warm ivory, soft natural light and sage accents. Clean and serene.</p></article>
+          <article class="theme trad"><h3>Traditional</h3><p>Cream and saffron with delicate gold ornament. Warm and familiar.</p></article>
+          <article class="theme minimal"><h3>Premium Minimal</h3><p>Near-black with restrained gold. Elegant and focused.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="detail-title">
+      <div class="narrow">
+        <div class="head">
+          <p class="eyebrow">The small things</p>
+          <h2 id="detail-title">Quiet, careful, reliable.</h2>
+        </div>
+        <ul class="list">
+          <li>A completed mala is marked by a soft band of light and a different, gentle pulse. No confetti.</li>
+          <li>Undo takes back exactly one bead, even right after a mala is completed.</li>
+          <li>Progress is saved with every bead and survives restarts.</li>
+          <li>Daily totals stay correct across midnight.</li>
+          <li>Optional soft sound, quarter milestones, keep-screen-awake and a gentle daily reminder.</li>
+          <li>Works with screen readers, large text and reduced motion.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="privacy-title">
+      <div class="wrap">
+        <div class="band">
+          <p class="eyebrow">Private by design</p>
+          <h2 id="privacy-title">Your practice stays with you.</h2>
+          <p>Juzu has no account, no ads and no analytics, and it does not even ask for internet access. Everything you
+            count is stored on your phone and nowhere else.</p>
+          <div class="pills"><span class="pill">No account</span><span class="pill">No ads</span><span class="pill">No tracking</span><span class="pill">Fully offline</span></div>
+          <a class="button" href="privacy.html">Read the privacy policy</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing" aria-labelledby="closing-title">
+      <div class="narrow">
+        <h2 id="closing-title">Begin with one bead.</h2>
+        <p class="tagline">One bead. One moment.</p>
+        <a class="button" href="https://play.google.com/store/apps/details?id=com.syntoralabs.juzu">Get it on Google Play</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 Syntoralabs · Juzu</span>
+      <span><a href="privacy.html">Privacy</a></span>
+    </div>
+  </footer>
+</body>
+</html>
