@@ -1,0 +1,651 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b1016" />
+  <meta name="description"
+    content="One Puff helps you track cigarettes, understand smoking habits, reduce at your own pace, and work toward quitting." />
+  <title>One Puff — Every Step Counts</title>
+
+  <style>
+    :root {
+      --bg: #0b1016;
+      --surface: #151c25;
+      --surface2: #1c2530;
+      --text: #f6f7f8;
+      --muted: #a5afbd;
+      --accent: #f17b6e;
+      --green: #80d7ad;
+      --border: #293440;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 1160px;
+      margin: auto;
+      padding: 0 24px;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(11,16,22,.94);
+      backdrop-filter: blur(16px);
+    }
+
+    nav {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -1.3px;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover { color: white; }
+
+    .btn {
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 22px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #151515;
+      font-weight: 700;
+      transition: transform .2s, opacity .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      opacity: .92;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 1px solid var(--border);
+    }
+
+    .hero {
+      padding: 115px 0 105px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse at 50% 15%,
+          rgba(241,123,110,.11), transparent 55%);
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      max-width: 850px;
+      margin: 22px auto;
+      font-size: clamp(45px, 7vw, 86px);
+      letter-spacing: -4px;
+      line-height: 1.08;
+    }
+
+    h1 span { color: var(--accent); }
+
+    .hero p {
+      max-width: 620px;
+      margin: 0 auto 30px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .section { padding: 100px 0; }
+
+    .section-title {
+      font-size: clamp(32px, 4vw, 48px);
+      letter-spacing: -1.8px;
+      line-height: 1.15;
+      margin: 14px 0;
+    }
+
+    .section-desc {
+      max-width: 610px;
+      color: var(--muted);
+      margin-bottom: 38px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 30px;
+      border-radius: 22px;
+    }
+
+    .card h3 {
+      font-size: 22px;
+      letter-spacing: -.5px;
+      margin: 18px 0 8px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 15px;
+      margin: 0;
+    }
+
+    .card .icon {
+      font-size: 30px;
+    }
+
+    .demo {
+      max-width: 430px;
+      margin: 60px auto 0;
+      border: 1px solid #35404e;
+      background: linear-gradient(160deg,
+        #202a36, #111821);
+      padding: 30px;
+      border-radius: 30px;
+      text-align: left;
+      box-shadow: 0 30px 100px rgba(0,0,0,.3);
+    }
+
+    .demo-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .demo-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .count {
+      font-size: 75px;
+      font-weight: 750;
+      line-height: 1.2;
+      letter-spacing: -4px;
+      margin-top: 22px;
+    }
+
+    .progress {
+      height: 8px;
+      border-radius: 20px;
+      background: #38414d;
+      overflow: hidden;
+      margin: 22px 0;
+    }
+
+    .progress div {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      transition: width .35s;
+    }
+
+    .demo button {
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    .insight {
+      margin-top: 20px;
+      padding: 18px;
+      background: #293441;
+      border-radius: 14px;
+      color: #d9e0e8;
+      font-size: 14px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .heart {
+      display: grid;
+      place-items: center;
+      min-height: 340px;
+      background: radial-gradient(circle,
+        rgba(241,123,110,.16), transparent 65%);
+    }
+
+    .heart-shape {
+      font-size: 160px;
+      filter: drop-shadow(0 15px 35px
+        rgba(241,90,90,.28));
+      animation: heartbeat 1.15s infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.12); }
+      30% { transform: scale(1.02); }
+      45% { transform: scale(1.09); }
+      65% { transform: scale(1); }
+    }
+
+    .stat {
+      display: inline-block;
+      margin: 16px 24px 0 0;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 25px;
+      color: var(--green);
+    }
+
+    .stat small { color: var(--muted); }
+
+    .cta {
+      padding: 90px 24px;
+      text-align: center;
+      background: linear-gradient(145deg,
+        #202932, #141b23);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media(max-width: 760px) {
+      .nav-links { display: none; }
+      .grid, .split { grid-template-columns: 1fr; }
+      .hero { padding: 85px 0; }
+      .section { padding: 70px 0; }
+      h1 { letter-spacing: -2px; }
+      .heart { min-height: 240px; }
+      .heart-shape { font-size: 120px; }
+    }
+
+    @media(prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">one<span>puff.</span></a>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#journey">Your Journey</a>
+          <a href="#heart">Living Heart</a>
+        </div>
+        <a href="https://onepuff.vercel.app"
+          class="btn">Open App</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">
+          Your journey. Your pace.
+        </div>
+
+        <h1>Every puff counts.<br>
+          <span>So does every step forward.</span>
+        </h1>
+
+        <p>
+          Understand your smoking habits, make small
+          changes, and work toward a smoke-free life.
+          No judgment. No pressure. Just progress.
+        </p>
+
+        <div class="actions">
+          <a class="btn"
+            href="https://onepuff.vercel.app">
+            Start Tracking →
+          </a>
+          <a class="btn btn-outline"
+            href="#features">
+            Explore Features
+          </a>
+        </div>
+
+        <div class="demo">
+          <div class="demo-top">
+            <strong>Your Day</strong>
+            <span class="demo-label">Interactive preview</span>
+          </div>
+
+          <div class="count" id="count">0</div>
+          <div class="demo-label">
+            Cigarettes logged today
+          </div>
+
+          <div class="progress">
+            <div id="progress"></div>
+          </div>
+
+          <div class="demo-label">
+            Example daily goal: 6
+          </div>
+
+          <button class="btn" onclick="logCigarette()">
+            + Log a Cigarette
+          </button>
+
+          <button class="btn btn-outline"
+            onclick="undoCigarette()">
+            Undo
+          </button>
+
+          <div class="insight" id="insight">
+            Start logging to understand your habits.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="journey">
+      <div class="container">
+        <div class="eyebrow">Built around you</div>
+        <h2 class="section-title">
+          Three paths. One companion.
+        </h2>
+        <p class="section-desc">
+          Whether you're simply curious about your
+          habits or ready to quit, One Puff adapts
+          to your goals.
+        </p>
+
+        <div class="grid">
+          <article class="card">
+            <div class="icon">◎</div>
+            <h3>Track</h3>
+            <p>
+              Record cigarettes, discover patterns,
+              and understand when and why you smoke.
+              No goal required.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">↘</div>
+            <h3>Reduce</h3>
+            <p>
+              Set realistic daily targets, follow
+              your trends, and celebrate small
+              improvements.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">✦</div>
+            <h3>Quit</h3>
+            <p>
+              Set a quit date, navigate cravings,
+              and follow your progress one day
+              at a time.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="eyebrow">More than a counter</div>
+        <h2 class="section-title">
+          Little tools. Meaningful change.
+        </h2>
+
+        <div class="grid">
+          <article class="card">
+            <div class="icon">◷</div>
+            <h3>Quick Logging</h3>
+            <p>
+              Record cigarettes in seconds and
+              keep your daily history organized.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">▥</div>
+            <h3>Personal Insights</h3>
+            <p>
+              Discover smoking patterns, common
+              triggers, and changes over time.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">◉</div>
+            <h3>Craving Rescue</h3>
+            <p>
+              Try short exercises and practical
+              strategies when an urge appears.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">₹</div>
+            <h3>Money Saved</h3>
+            <p>
+              See estimated savings as you
+              reduce your smoking.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">◇</div>
+            <h3>Daily Missions</h3>
+            <p>
+              Take on small optional challenges
+              to better understand your habits.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">♡</div>
+            <h3>Living Heart</h3>
+            <p>
+              Explore an interactive anatomical
+              heart and educational visualizations
+              of smoking-related health.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="heart">
+      <div class="container split">
+
+        <div>
+          <div class="eyebrow">A new perspective</div>
+          <h2 class="section-title">
+            Your heart matters.
+          </h2>
+
+          <p class="section-desc">
+            Explore a living, interactive heart
+            experience designed to make health
+            education more engaging.
+
+            Understand your smoking trends and
+            follow your personal progress.
+          </p>
+
+          <p style="color:var(--muted);font-size:13px">
+            Heart visuals are illustrative and
+            do not diagnose or measure organ health.
+          </p>
+
+          <a href="https://onepuff.vercel.app"
+            class="btn">
+            Explore One Puff →
+          </a>
+        </div>
+
+        <div class="heart">
+          <div class="heart-shape"
+            role="img"
+            aria-label="Animated heart illustration">
+            ❤️
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta">
+          <div class="eyebrow">
+            Your next chapter starts here
+          </div>
+
+          <h2 class="section-title">
+            Progress begins with awareness.
+          </h2>
+
+          <p class="section-desc"
+            style="margin:0 auto 30px">
+            You don't need to change everything
+            today. Start by understanding where
+            you are.
+          </p>
+
+          <a href="https://onepuff.vercel.app"
+            class="btn">
+            Open One Puff →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <span>© <span id="year"></span> One Puff</span>
+      <span>
+        Track. Reduce. Quit. At your pace.
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    let count = 0;
+    const dailyGoal = 6;
+
+    function updateDemo() {
+      document.getElementById("count")
+        .textContent = count;
+
+      document.getElementById("progress")
+        .style.width =
+          Math.min(count / dailyGoal * 100, 100) + "%";
+
+      let message;
+
+      if (count === 0) {
+        message =
+          "Start logging to understand your habits.";
+      } else if (count < dailyGoal) {
+        message =
+          "You have logged " + count +
+          " cigarette(s). Keep learning your patterns.";
+      } else {
+        message =
+          "You've reached your example daily target. " +
+          "Every entry is useful information.";
+      }
+
+      document.getElementById("insight")
+        .textContent = message;
+    }
+
+    function logCigarette() {
+      count++;
+      updateDemo();
+    }
+
+    function undoCigarette() {
+      count = Math.max(0, count - 1);
+      updateDemo();
+    }
+
+    document.getElementById("year")
+      .textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
